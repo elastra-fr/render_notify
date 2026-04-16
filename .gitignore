@@ -1,0 +1,49 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Virtual environments
+venv/
+ENV/
+.venv/
+.env
+
+# Editor / IDE
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Blender
+*.blend1
+*.blend2
+*.blend3
+
+# Render outputs or temp folders inside the repo
+tmp/
+renders/
+output/
+
+# Logs
+*.log
+
+# Credentials and secrets (local files occasionally used)
+credentials.json
+secrets.*
+.env*
+
+# Misc
+*.bak
+*.swp
+*~
