@@ -2,14 +2,13 @@ bl_info = {
     "name": "Render Notify",
     "author": "Emmanuel LASTRA DE NATIAS",
     "version": (0, 0, 1),
-    "blender": (3, 0, 0),
+    "blender": (4, 0, 0),
     "location": "Edit > Preferences > Add-ons",
     "description": "Send email and/or Discord notifications when a render starts, completes, or is cancelled.",
     "category": "Render",
 }
 
 import threading
-
 import bpy
 from bpy.app.handlers import persistent
 
