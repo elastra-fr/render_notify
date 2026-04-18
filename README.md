@@ -30,6 +30,48 @@ Do not use a personal email address for this purpose. Instead, create a dedicate
 
 Users can also opt to receive notifications via Discord, which is a popular communication platform for gamers and communities. This allows users to stay connected and receive updates in real-time without leaving their workflow. To set up Discord notifications, users will need to create a webhook in their Discord server and provide the webhook URL in the addon's settings. This way, they can receive notifications directly in their chosen Discord channel when a render is complete.
 
+## Tests 
+
+A test suite with `pytest` is provided in `tests/`. The tests can be run outside of Blender thanks to fakes for `bpy` and `keyring`.
+
+Prerequisite: `pytest` and virtual environment (recommended).
+
+Create a virtual environment (optional but recommended):
+
+```bash
+python3 -m venv .venv
+```
+
+
+Activate the virtual environment (Linux/MacOS) :
+
+```bash
+source .venv/bin/activate
+```
+
+Deactivate the virtual environment:
+
+```bash
+deactivate
+```
+
+Execution examples:
+
+```bash
+# in the project's virtual environment (recommended)
+./.venv/bin/python3 -m pytest -v
+
+# or globally
+python3 -m pytest -v
+```
+
+Install `pytest` in the venv:
+
+```bash
+./.venv/bin/python3 -m pip install pytest
+```
+
+
 # Render Notify Addon pour Blender (FR)
 
 L'addon est actuellement en cours de développement, et la version est définie à 0.0.1. L'auteur est Emmanuel LASTRA DE NATIAS. L'addon est conçu pour fonctionner avec Blender version 4.0.0 et supérieure (à confirmer).
@@ -57,3 +99,43 @@ Il est recommandé de ne pas utiliser une adresse e-mail personnelle à cet effe
 ### Discord
 
 Les utilisateurs peuvent également choisir de recevoir des notifications via Discord, qui est une plateforme de communication populaire pour les joueurs et les communautés. Cela permet aux utilisateurs de rester connectés et de recevoir des mises à jour en temps réel sans quitter leur flux de travail. Pour configurer les notifications Discord, les utilisateurs devront créer un webhook dans leur serveur Discord et fournir l'URL du webhook dans les paramètres de l'addon. Ainsi, ils pourront recevoir des notifications directement dans le canal Discord de leur choix lorsque le rendu est terminé.
+
+## Tests
+
+Une suite de tests basée sur `pytest` est fournie dans le répertoire `tests/`. Les tests sont conçus pour s'exécuter hors de Blender : un fake minimal pour `bpy` et `keyring` est utilisé afin d'éviter d'avoir besoin d'une installation de Blender pour lancer la suite.
+
+Prérequis : `pytest` et environnement virtuel (recommandé).
+
+Créer un environnement virtuel (optionnel mais recommandé) :
+
+```bash
+    python3 -m venv .venv
+```
+Activer l'environnement virtuel (Linux/MacOS) :
+
+```bash
+    source .venv/bin/activate
+```
+
+Désactiver l'environnement virtuel :
+
+```bash
+    deactivate
+```
+
+Exemples d'exécution :
+
+```bash
+# dans l'environnement virtuel du projet (recommandé)
+./.venv/bin/python3 -m pytest -v
+
+# ou avec l'interpréteur système
+python3 -m pytest -v
+```
+
+To install `pytest` in the venv:
+
+```bash
+./.venv/bin/python3 -m pip install pytest
+```
+
