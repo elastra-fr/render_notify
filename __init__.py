@@ -8,6 +8,18 @@ bl_info = {
     "category": "Render",
 }
 
+# Use single source of truth for version
+try:
+    from ._version import __version__ as __version__
+except Exception:
+    __version__ = None
+
+if __version__:
+    try:
+        bl_info["version"] = tuple(int(p) for p in __version__.split("."))
+    except Exception:
+        pass
+
 import threading
 import bpy
 from bpy.app.handlers import persistent

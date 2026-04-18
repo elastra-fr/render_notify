@@ -1,4 +1,6 @@
-# Render Notify Addon for Blender (EN)
+# Render Notify Addon for Blender
+
+Render on Blender can took a long time, and it can be frustrating to wait without knowing when the process is complete. The Render Notify addon for Blender aims to solve this problem by providing a simple notification system that alerts users when their renders are finished. You can safely mow your lawn, do the dishes, or even take a nap while waiting for your render to complete, knowing that you'll be notified as soon as it's done or even if it fails.
 
 The addon is currently in its early stages of development, and the version is set to 0.0.1. The author is Emmanuel LASTRA DE NATIAS. The addon is designed to work with Blender version 4.0.0 and above (to be confirmed).
 
@@ -71,71 +73,47 @@ Install `pytest` in the venv:
 ./.venv/bin/python3 -m pip install pytest
 ```
 
+## Workflow
 
-# Render Notify Addon pour Blender (FR)
+This project follows a Git workflow and automated CI/release rules:
 
-L'addon est actuellement en cours de développement, et la version est définie à 0.0.1. L'auteur est Emmanuel LASTRA DE NATIAS. L'addon est conçu pour fonctionner avec Blender version 4.0.0 et supérieure (à confirmer).
+- Branches:
+	- `main`: release branch containing released code and tags.
+	- `develop`: integration branch for completed features.
+	- `feature/*`: feature branches created from `develop`.
+	- `hotfix/*`: urgent fixes created from `main` and merged back into `develop`.
+    - `refactor/*`: refactoring branches created from `develop` for code improvements without changing functionality.
+    - `chores/*`: maintenance branches created from `develop` for tasks like updating dependencies, improving documentation, or other non-feature work.
+    - `ci/*`: branches for CI configuration changes, created from `develop` and merged back after review.
 
-Cet addon offre un système de notification simple pour le processus de rendu de Blender. Il permet aux utilisateurs de recevoir des notifications lorsque le rendu est terminé, facilitant ainsi la gestion des tâches de rendu longues sans avoir à vérifier constamment la progression.
+- Pull Requests & CI:
+	- Pull requests targeting `develop` or `main` run the CI workflow (`.github/workflows/ci.yml`).
+	- CI performs a `version-check` (ensures `render_notify/_version.py` matches `bl_info['version']`), then runs tests and uploads coverage artifacts (`htmlcov`, `coverage.xml`).
 
-## Sécurité
+- Release:
+	- Pushing or merging to `main` triggers the release workflow (`.github/workflows/release.yml`).
+	- The release workflow reads the package version from `render_notify/_version.py` and creates a Git tag `vX.Y.Z` and a GitHub Release (skipping tag creation if the tag already exists).
 
-Les identifiants sont stockés via la bibliothèque `keyring`, qui gère de manière sécurisée les informations sensibles. Cela garantit que vos identifiants de messagerie et/ou Discord ne sont pas exposés en texte clair.
+- Versioning:
+	- The single source of truth is `render_notify/_version.py` (`__version__ = "X.Y.Z"`).
+	- `bl_info['version']` is derived from `_version.py` at import time.
+	- Use `bump2version` (configured via `.bumpversion.cfg`) to bump versions, commit, and create tags consistently.
 
-## Personnalisation des messages
-
-L'addon permet aux utilisateurs de personnaliser les messages de notification envoyés lorsque le rendu est terminé. Cette fonctionnalité permet aux utilisateurs d'adapter les notifications à leurs préférences, rendant l'expérience plus agréable et personnalisée.
-
-## Canaux
-
-L'addon prend en charge plusieurs canaux de notification, y compris pour l'instant le courrier électronique et Discord. Les utilisateurs peuvent choisir leur méthode préférée pour recevoir les notifications, offrant ainsi une plus grande flexibilité et commodité dans la gestion de leur flux de travail de rendu.
-
-### Courrier électronique
-
-Les utilisateurs peuvent configurer des notifications par courrier électronique pour recevoir des alertes lorsque leurs rendus sont terminés. Cela est particulièrement utile pour ceux qui souhaitent rester informés sans avoir à vérifier constamment Blender.
-
-Il est recommandé de ne pas utiliser une adresse e-mail personnelle à cet effet. Créez plutôt un compte e-mail dédié pour l'envoi des notifications afin d'assurer une meilleure sécurité et gestion de vos identifiants. Si vous pouvez utiliser un mot de passe spécifique à l'application, il est recommandé de renforcer encore la sécurité.
-
-### Discord
-
-Les utilisateurs peuvent également choisir de recevoir des notifications via Discord, qui est une plateforme de communication populaire pour les joueurs et les communautés. Cela permet aux utilisateurs de rester connectés et de recevoir des mises à jour en temps réel sans quitter leur flux de travail. Pour configurer les notifications Discord, les utilisateurs devront créer un webhook dans leur serveur Discord et fournir l'URL du webhook dans les paramètres de l'addon. Ainsi, ils pourront recevoir des notifications directement dans le canal Discord de leur choix lorsque le rendu est terminé.
-
-## Tests
-
-Une suite de tests basée sur `pytest` est fournie dans le répertoire `tests/`. Les tests sont conçus pour s'exécuter hors de Blender : un fake minimal pour `bpy` et `keyring` est utilisé afin d'éviter d'avoir besoin d'une installation de Blender pour lancer la suite.
-
-Prérequis : `pytest` et environnement virtuel (recommandé).
-
-Créer un environnement virtuel (optionnel mais recommandé) :
+Quick commands (using the project's venv):
 
 ```bash
-    python3 -m venv .venv
-```
-Activer l'environnement virtuel (Linux/MacOS) :
+# create + activate venv (optional)
+python3 -m venv .venv
+source .venv/bin/activate
 
-```bash
-    source .venv/bin/activate
-```
+# run tests
+./.venv/bin/python -m pytest -v
 
-Désactiver l'environnement virtuel :
+# run coverage and produce HTML report
+./.venv/bin/python -m pytest --cov=render_notify --cov-report=term-missing --cov-report=html
 
-```bash
-    deactivate
-```
-
-Exemples d'exécution :
-
-```bash
-# dans l'environnement virtuel du projet (recommandé)
-./.venv/bin/python3 -m pytest -v
-
-# ou avec l'interpréteur système
-python3 -m pytest -v
+# bump the version (patch/minor/major)
+./.venv/bin/bump2version patch
 ```
 
-To install `pytest` in the venv:
-
-```bash
-./.venv/bin/python3 -m pip install pytest
-```
 
