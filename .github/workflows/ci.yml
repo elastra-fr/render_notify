@@ -10,24 +10,48 @@ permissions:
   contents: read
 
 jobs:
-  version-check:
-    name: Version match check
+  precheck:
+    name: Detect changes & optional version check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Set up Python
+      - name: Detect changed files
+        id: detect
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            if (!pr) {
+              core.setOutput('changed','true');
+              return;
+            }
+            const files = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number
+            });
+            const interesting = ['render_notify/_version.py','render_notify/__init__.py'];
+            const changed = files.data.some(f => interesting.includes(f.filename));
+            core.setOutput('changed', changed ? 'true' : 'false');
+
+      - name: Set up Python (for version check)
+        if: steps.detect.outputs.changed == 'true'
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      - name: Install deps
+      - name: Install deps (for version check)
+        if: steps.detect.outputs.changed == 'true'
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
 
       - name: Run version check
+        if: steps.detect.outputs.changed == 'true'
         run: |
           python - <<'PY'
           import sys, types
@@ -48,7 +72,6 @@ jobs:
           sys.modules['bpy'] = bpy
           sys.modules['bpy.app'] = app_mod
           sys.modules['bpy.app.handlers'] = handlers_mod
-          from importlib import import_module
           import render_notify
           from render_notify import _version
           version_str = _version.__version__
@@ -66,7 +89,7 @@ jobs:
 
   test:
     name: Run tests and publish coverage
-    needs: version-check
+    needs: precheck
     runs-on: ubuntu-latest
     strategy:
       matrix:
