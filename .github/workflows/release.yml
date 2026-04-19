@@ -51,12 +51,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
+      - name: Debug — Afficher l'arborescence du workspace
+        run: |
+          echo "Contenu du workspace :"
+          ls -l $GITHUB_WORKSPACE
+          echo "Arborescence complète :"
+          find $GITHUB_WORKSPACE
       - name: Read package version
         id: version
         run: |
-          cd "$GITHUB_WORKSPACE"
-          export PYTHONPATH="$PWD"
-          VERSION=$(python -c "from render_notify._version import __version__; print(__version__)")
+          export PYTHONPATH="$GITHUB_WORKSPACE"
+          VERSION=$(python -c "from render_notify._version import __version__; print(__version__)" )
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create and push tag
