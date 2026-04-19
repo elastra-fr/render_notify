@@ -54,6 +54,7 @@ jobs:
       - name: Read package version
         id: version
         run: |
+          cd "$GITHUB_WORKSPACE"
           export PYTHONPATH="$PWD"
           VERSION=$(python -c "from render_notify._version import __version__; print(__version__)")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
