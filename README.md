@@ -75,13 +75,13 @@ Install `pytest` in the venv:
 
 ## Installation
 
-Pour installer l’addon dans Blender, téléchargez **render_notify-x.y.z.zip** depuis la section “Assets” de la page de release GitHub (ne pas utiliser “Source code”).
+To install the addon in Blender, download **render_notify-x.y.z.zip** from the "Assets" section of the GitHub release page (do not use "Source code").
 
-Dans Blender :
+In Blender, go to:
 - Edit > Preferences > Add-ons > Install…
-- Sélectionnez le fichier render_notify-x.y.z.zip téléchargé
+- Select the downloaded render_notify-x.y.z.zip file and click "Install Add-on".
 
-Redémarrez Blender si besoin, puis activez l’addon dans la liste.
+Restart Blender if needed, then enable the add-on in the list.
 
 ## Workflow
 
