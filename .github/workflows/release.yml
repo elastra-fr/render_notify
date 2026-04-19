@@ -70,14 +70,25 @@ jobs:
           git tag -a "$NEW_TAG" -m "Release $NEW_TAG"
           git push origin "$NEW_TAG"
 
-      - name: Create GitHub release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create dist directory
+        run: mkdir -p dist
+
+      - name: Create Blender addon zip
+        run: |
+          zip -r dist/render_notify-${{ steps.version.outputs.VERSION }}.zip render_notify -x 'render_notify/tests/*' '*.pyc' '*/__pycache__/*'
+
+      - name: Publish GitHub Release with clean addon zip
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ steps.version.outputs.VERSION }}
-          release_name: v${{ steps.version.outputs.VERSION }}
+          name: v${{ steps.version.outputs.VERSION }}
+          files: dist/render_notify-${{ steps.version.outputs.VERSION }}.zip
           body: |
-            Automated release v${{ steps.version.outputs.VERSION }}
-          draft: false
-          prerelease: false
+            ## Installation
+            Téléchargez **render_notify-${{ steps.version.outputs.VERSION }}.zip** ci-dessous (ne pas utiliser “Source code”).
+            
+            Dans Blender :
+            Edit > Preferences > Add-ons > Install...
+            Sélectionnez le fichier render_notify-${{ steps.version.outputs.VERSION }}.zip.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
