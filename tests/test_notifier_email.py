@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Load module directly to avoid importing Blender-dependent package __init__.py
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("render_notify.core.notifier_email", ROOT / "core" / "notifier_email.py")
+spec = importlib.util.spec_from_file_location("render_notify.core.notifier_email", ROOT / "render_notify" / "core" / "notifier_email.py")
 ne = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ne)
 import sys as _sys

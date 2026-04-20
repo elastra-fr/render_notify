@@ -3,7 +3,7 @@ from pathlib import Path
 
 # Load module directly to avoid importing Blender-dependent package __init__.py
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("render_notify.core.notifier_discord", ROOT / "core" / "notifier_discord.py")
+spec = importlib.util.spec_from_file_location("render_notify.core.notifier_discord", ROOT / "render_notify" / "core" / "notifier_discord.py")
 nd = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(nd)
 import sys as _sys

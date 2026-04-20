@@ -81,5 +81,5 @@ try:
     import render_notify.core  # type: ignore
 except Exception:
     core_pkg = types.ModuleType("render_notify.core")
-    core_pkg.__path__ = [os.path.join(ROOT, "core")]
+    core_pkg.__path__ = [os.path.join(ROOT, "render_notify", "core")]
     sys.modules["render_notify.core"] = core_pkg

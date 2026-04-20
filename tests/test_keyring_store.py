@@ -4,7 +4,7 @@ from pathlib import Path
 
 # Load module directly to avoid importing package __init__.py (Blender deps)
 ROOT = Path(__file__).resolve().parents[1]
-spec = importlib.util.spec_from_file_location("render_notify.core.keyring_store", ROOT / "core" / "keyring_store.py")
+spec = importlib.util.spec_from_file_location("render_notify.core.keyring_store", ROOT / "render_notify" / "core" / "keyring_store.py")
 ks = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(ks)
 import sys as _sys
